@@ -3,6 +3,8 @@
 Projeto completo de API REST com operações CRUD desenvolvido em Spring Boot.
 **Tecnologias:** Java, Spring Boot, Spring Data JPA, Spring Web, H2 Database, Maven.
 
+<img width="1019" height="381" alt="logo" src="https://github.com/user-attachments/assets/7b13c978-8da3-40d7-a48c-e92bed3a54a0" />
+
 ## ✨ Funcionalidades
 - CRUD completo de entidades
 - API RESTful
@@ -17,3 +19,4 @@ Você pode importar e executar as rotas diretamente no Postman através do link 
 
 ## 🎯 Objetivo
 Projeto desenvolvido para demonstrar habilidades em desenvolvimento backend Java com Spring Boot.
+
