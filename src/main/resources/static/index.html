@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot CRUD API</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+        }
+
+        .card-content p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .endpoint-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .get { background: #d1fae5; color: #065f46; }
+        .post { background: #dbeafe; color: #1e40af; }
+        .put { background: #fef3c7; color: #92400e; }
+        .delete { background: #fee2e2; color: #991b1b; }
+
+        .endpoint-path {
+            font-family: monospace;
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .endpoint-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: white;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="logo">
+            <i class="fas fa-rocket"></i>
+        </div>
+        <h1>Spring Boot CRUD API</h1>
+        <p class="subtitle">API REST completa desenvolvida com Spring Boot, JPA e arquitetura em camadas</p>
+    </header>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h2>Postman Workspace</h2>
+        </div>
+        <div class="card-content">
+            <p>Coleção de requisições utilizada durante o desenvolvimento e testes da API.</p>
+            <p>Você pode importar e executar as rotas diretamente no Postman através do link abaixo:</p>
+            <a href="https://red-station-3134838.postman.co/workspace/%C3%89der's-Workspace~4802ce4e-6c1b-4f0a-845a-9c50d7a563c3/collection/43884356-500d543a-fcc3-45a0-b295-d1e62c94acfc?action=share&creator=43884356" target="_blank" class="btn">
+                <i class="fab fa-postman"></i> Acessar Postman Workspace
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <h2>Tutorial Completo</h2>
+        </div>
+        <div class="card-content">
+            <p>Assista ao tutorial completo no canal JavaNauta e aprenda a construir este projeto passo a passo:</p>
+            <a href="https://youtu.be/yW7RrWfUeHE" target="_blank" class="btn">
+                <i class="fab fa-youtube"></i> Ver Tutorial no YouTube
+            </a>
+        </div>
+    </div>
+
+    <h2 style="color: white; text-align: center; margin: 40px 0 20px;">Endpoints da API</h2>
+    <div class="grid">
+        <div class="endpoint-card">
+            <span class="endpoint-method get">GET</span>
+            <div class="endpoint-path">/api/usuarios</div>
+            <div class="endpoint-desc">Lista todos os usuários cadastrados</div>
+        </div>
+        <div class="endpoint-card">
+            <span class="endpoint-method get">GET</span>
+            <div class="endpoint-path">/api/usuarios/{id}</div>
+            <div class="endpoint-desc">Busca um usuário específico pelo ID</div>
+        </div>
+        <div class="endpoint-card">
+            <span class="endpoint-method post">POST</span>
+            <div class="endpoint-path">/api/usuarios</div>
+            <div class="endpoint-desc">Cria um novo usuário</div>
+        </div>
+        <div class="endpoint-card">
+            <span class="endpoint-method put">PUT</span>
+            <div class="endpoint-path">/api/usuarios/{id}</div>
+            <div class="endpoint-desc">Atualiza os dados de um usuário</div>
+        </div>
+        <div class="endpoint-card">
+            <span class="endpoint-method delete">DELETE</span>
+            <div class="endpoint-path">/api/usuarios/{id}</div>
+            <div class="endpoint-desc">Remove um usuário do sistema</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Desenvolvido com Spring Boot | Projeto para portfólio</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/eder-luis-britto-garcia/" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+    </footer>
+
+</div>
+</body>
+</html>

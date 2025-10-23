@@ -1,0 +1,22 @@
+
+springboot-crud-api
+
+Projeto CRUD completo com Spring Boot. Desenvolvido no tutorial "CRUD Java com Spring Boot 2025" do canal JavaNauta. Inclui entidades, repositórios, serviços e controladores REST.
+
+https://github.com/angelicaweiler/cadastro-usuario/tree/master
+
+-----
+
+Javanauta
+
+https://www.youtube.com/@javanauta
+
+-----
+
+CRUD Java com Spring Boot 2025 | Aprenda o Projeto QUE TODO DEV PRECISA TER no Portfólio!
+
+https://youtu.be/yW7RrWfUeHE
+
+-----
+
+https://start.spring.io
